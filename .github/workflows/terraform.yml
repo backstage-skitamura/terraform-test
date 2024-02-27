@@ -79,10 +79,7 @@ jobs:
         echo AWS_WEB_IDENTITY_TOKEN_FILE=$AWS_WEB_IDENTITY_TOKEN_FILE >> $GITHUB_ENV
         echo AWS_ROLE_ARN=$AWS_ROLE_ARN >> $GITHUB_ENV
         echo AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION >> $GITHUB_ENV
-        echo $ACTIONS_ID_TOKEN_REQUEST_TOKEN
-        echo $ACTIONS_ID_TOKEN_REQUEST_URL 
-        curl --silent -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL" | jq -r '.value' > ${{ secrets.AWS_WEB_IDENTITY_TOKEN_FILE }}
-        #curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sigstore" | jq -r '.value' > ${{ secrets.AWS_WEB_IDENTITY_TOKEN_FILE }}
+        curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sigstore" | jq -r '.value' > ${{ secrets.AWS_WEB_IDENTITY_TOKEN_FILE }}
 
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
