@@ -59,8 +59,8 @@ locals {
    *****************************************/
   ngw = {
     count         = local.num_subnets
-    allocation_id = module.eip.eip[*].id
-    subnet_id     = module.external_subnet.subnet[*].id
+    allocation_id = aws_eip.eip[*].id
+    subnet_id     = aws_subnet.external_subnet[*].id
   }
 
   /******************************************
@@ -70,7 +70,7 @@ locals {
     count = local.num_subnets
     route = {
       cidr_block     = "0.0.0.0/0"
-      nat_gateway_id = module.ngw.ngw[*].id
+      nat_gateway_id = aws_nat_gateway.ngw[*].id
     }
     tags = merge(local.base_tags, map("Name", "${local.project}-internal-routetable"))
   }
@@ -79,7 +79,7 @@ locals {
     count = "1"
     route = {
       cidr_block = "0.0.0.0/0"
-      gateway_id = module.igw.igw.id
+      gateway_id = aws_internet_gateway.igw.id
     }
     tags = merge(local.base_tags, map("Name", "${local.project}-external-routetable"))
   }
@@ -89,13 +89,13 @@ locals {
    *****************************************/
   internal_rta = {
     count          = local.num_subnets
-    subnet_id      = module.internal_subnet.subnet[*].id
-    route_table_id = module.rt.internal_rt[*].id
+    subnet_id      = aws_subnet.internal_subnet[*].id
+    route_table_id = aws_route_table.internal_rt[*].id
   }
 
   external_rta = {
     count          = local.num_subnets
-    subnet_id      = module.external_subnet.subnet[*].id
-    route_table_id = module.rt.external_rt.id
+    subnet_id      = aws_subnet.external_subnet[*].id
+    route_table_id = aws_route_table.external_rt.id
   }
 }
