@@ -57,7 +57,9 @@ jobs:
     name: 'Terraform'
     runs-on: ubuntu-latest
     environment: production
-
+    permissions:
+      id-token: write
+      contents: read
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
