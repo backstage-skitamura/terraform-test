@@ -17,7 +17,7 @@ resource "aws_subnet" "internal_subnet" {
   count             = local.num_subnets
   cidr_block        = element(local.internal_subnet.cidr_block, count.index)
   availability_zone = element(local.internal_subnet.availability_zone, count.index)
-  tags              = local.subnet.tags
+  tags              = local.internal_subnet.tags
 
   depends_on = [
     aws_vpc.vpc
