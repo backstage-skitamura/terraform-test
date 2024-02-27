@@ -12,8 +12,8 @@ resource "aws_vpc" "vpc" {
     Subnet configuration
  *****************************************/
 # create internal subnetwork
-resource "aws_subnet" "ienternal_subnet" {
-  vpc_id            = aws_vpc.vpc.vpc_id
+resource "aws_subnet" "internal_subnet" {
+  vpc_id            = aws_vpc.vpc.id
   count             = local.num_subnets
   cidr_block        = element(local.internal_subnet.cidr_block, count.index)
   availability_zone = element(local.internal_subnet.availability_zone, count.index)
