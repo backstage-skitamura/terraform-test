@@ -12,7 +12,7 @@ locals {
    *****************************************/
   vpc = {
     cidr_block = "192.168.0.0/16"
-    tags       = merge(local.base_tags, tomap({"Name"="${local.project}-vpc"))
+    tags       = merge(local.base_tags, tomap({"Name"="${local.project}-vpc"}))
   }
 
   /******************************************
@@ -33,7 +33,7 @@ locals {
       "192.168.2.0/24",
     ]
     availability_zone = local.availability_zone
-    tags              = merge(local.base_tags, tomap("Name"="${local.project}-subnet-internal"), tomap("kubernetes.io/cluster/${local.project}"="shared"))
+    tags              = merge(local.base_tags, tomap({"Name"="${local.project}-subnet-internal"}), tomap({"kubernetes.io/cluster/${local.project}"="shared"}))
   }
 
   external_subnet = {
@@ -43,14 +43,14 @@ locals {
       "192.168.5.0/24",
     ]
     availability_zone = local.availability_zone
-    tags              = merge(local.base_tags, tomap("Name"="${local.project}-subnet-external"), tomap("kubernetes.io/cluster/${local.project}"="shared"))
+    tags              = merge(local.base_tags, tomap({"Name"="${local.project}-subnet-external"}), tomap({"kubernetes.io/cluster/${local.project}"="shared"}))
   }
 
   /******************************************
     Internet GW configuration
    *****************************************/
   igw = {
-    tags = merge(local.base_tags, tomap("Name"="${local.project}-inetrnet-gw"))
+    tags = merge(local.base_tags, tomap({"Name"="${local.project}-inetrnet-gw"}))
   }
 
 
@@ -72,7 +72,7 @@ locals {
       cidr_block     = "0.0.0.0/0"
       nat_gateway_id = aws_nat_gateway.ngw[*].id
     }
-    tags = merge(local.base_tags, tomap("Name"="${local.project}-internal-routetable"))
+    tags = merge(local.base_tags, tomap({"Name"="${local.project}-internal-routetable"}))
   }
 
   external_rt = {
@@ -81,7 +81,7 @@ locals {
       cidr_block = "0.0.0.0/0"
       gateway_id = aws_internet_gateway.igw.id
     }
-    tags = merge(local.base_tags, tomap("Name"="${local.project}-external-routetable"))
+    tags = merge(local.base_tags, tomap({"Name"="${local.project}-external-routetable"}))
   }
 
   /******************************************
